@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Illis Number Display</title>
+<style>
+  body {
+    background-color: white;
+    color: black;
+    font-family: monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  button {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+  #output {
+    margin-top: 20px;
+    font-size: 20px;
+  }
+</style>
+</head>
+<body>
+
+<div>
+  <button id="speed05">Speed 0.5x</button>
+  <button id="speed2">Speed 2x</button>
+</div>
+
+<div id="output"></div>
+
+<script>
+let multiplier = 1;
+let counter = 0;
+const maxCounter = 999999;
+const duration = 10 * 60 * 1000; // 10 minutes
+const startTime = Date.now();
+
+document.getElementById("speed05").addEventListener("click", () => multiplier = 0.5);
+document.getElementById("speed2").addEventListener("click", () => multiplier = 2);
+
+function illis(x) {
+  const n = Math.floor(counter);
+  if (x <= 1) return `10<sup>0</sup>`;
+  else if (x > 1.4 && x <= 1.5) return `10<sup>0</sup>${n}`;
+  else if (x > 1.5 && x <= 1.6) return `10<sup>10<sup>0</sup></sup>${n}`;
+  else if (x > 1.6 && x <= 1.7) return `10<sup>10<sup>10<sup>0</sup></sup></sup>${n}`;
+  else if (x > 1.7 && x <= 1.8) return `10<sup>10<sup>10<sup>10<sup>0</sup></sup></sup></sup>${n}`;
+  else if (x > 1.8 && x <= 1.9) return `10<sup>10<sup>10<sup>10<sup>10<sup>0</sup></sup></sup></sup></sup>${n}`;
+  else if (x > 1.9 && x <= 2.0) return `10^^^1${n}`;
+  else if (x > 2.0 && x <= 2.1) return `10^^^^1${n}`;
+  else if (x > 2.1 && x <= 2.2) return `10{{5}}10${n}`;
+  else if (x > 2.2 && x <= 2.3) return `10{{{5}}}10${n}`;
+  else if (x > 2.3 && x <= 2.4) return `10{{{{5}}}}10${n}`;
+  else if (x > 2.4 && x <= 2.5) return `10{{{{{5}}}}}10${n}`;
+  else if (x > 2.5) return `10{{{{{{{5}}}}}}}10${n}`;
+  else return `{10,10,10,10}`;
+}
+
+function update() {
+  const elapsed = Date.now() - startTime;
+  if (elapsed > duration) return; // stop after 10 minutes
+  counter += 0.1 * multiplier;
+  if (counter > maxCounter) counter = 0;
+
+  const x = 1.5 + (elapsed / duration) * 1.5; // x gradually increases from 1.5 to 3 over 10 mins
+  document.getElementById("output").innerHTML = illis(x);
+
+  requestAnimationFrame(update);
+}
+
+update();
+</script>
+
+</body>
+</html>
